@@ -29,26 +29,43 @@ def handle_events():
             running = False
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
+boy = None
+grass = None
+running = None
 
-open_canvas()
+# 초기화
+def enter():
+    global boy, grass, running
+    boy = Boy()
+    grass = Grass()
+    running = True
 
+#종료
+def exit():
+    global boy, grass
+    del boy
+    del grass
 
-boy = Boy()
-grass = Grass()
-running = True
-
-# game main loop code
-while running:
-    handle_events()
-
+def update():
     boy.update()
 
+def draw():
     clear_canvas()
     grass.draw()
     boy.draw()
     update_canvas()
 
+open_canvas()
+
+enter()
+
+# game main loop code
+while running:
+    handle_events()
+    update()
+    draw()
     delay(0.05)
+exit()
 
 # finalization code
 close_canvas()
